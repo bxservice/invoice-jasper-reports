@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generic cross-platform fonts - Helvetica/SansSerif base -->
+<jasperTemplate xmlns="http://jasperreports.sourceforge.net/jasperreports/template" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/template http://jasperreports.sourceforge.net/xsd/jaspertemplate.xsd">
+	<!-- Generic SansSerif 10pt for lists - PDF: Helvetica -->
+	<style name="Narrow Lists" fontName="SansSerif" fontSize="10"/>
+	
+	<!-- List headers: bold, no borders -->
+	<style name="Narrow Lists Header" style="Narrow Lists" isBold="true">
+		<box>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	
+	<!-- Page header: cyan bg, large bold -->
+	<style name="Page Header" mode="Opaque" forecolor="#000000" backcolor="#B3F1FF" fontName="SansSerif" fontSize="20" isBold="true"/>
+	
+	<!-- Page footer: cyan bg, small -->
+	<style name="Page Footer" mode="Opaque" forecolor="#000000" backcolor="#B3F1FF" fontName="SansSerif" fontSize="8"/>
+	
+	<!-- Report title: green bg -->
+	<style name="Report Header" style="Page Header" backcolor="#C2FFB3"/>
+	
+	<!-- Standard body font -->
+	<style name="Report Standard Font" fontName="SansSerif"/>
+	
+	<!-- Monospace for numbers/codes -->
+	<style name="Report Monospace Font" fontName="Monospaced"/>
+	
+	<!-- Form fill: blue bold monospace -->
+	<style name="Monospace Form Fill" forecolor="#0000FF" fontName="Monospaced" isBold="true"/>
+	
+	<!-- Large header -->
+	<style name="Header" style="Report Standard Font" fontSize="21"/>
+	
+	<!-- Gray row bg (German: "grauer Zeilenhintergrund") -->
+	<style name="grauer Zeilenhintergrund" mode="Opaque" backcolor="#EDEDED" fontName="SansSerif"/>
+</jasperTemplate>
+

@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice Address" language="groovy" pageWidth="240" pageHeight="240" whenNoDataType="NoPages" columnWidth="240" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="30ceeae4-aeff-40ff-b8e1-5e8d8d1d0e83">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="737"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="253"/>
+	<template><![CDATA["styles.jrtx"]]></template>
+	<parameter name="RECORD_ID" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[109]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CURRENT_LANG" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["de_DE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    ih.documentno,
+    ih.bpgreeting,
+    ih.name,
+    ih.name2,
+    ih.bpcontactgreeting,
+    ih.contactname,
+    ih.address1,
+    ih.address2,
+    ih.address3,
+    ih.address4,
+    ih.city,
+    ih.regionname,
+    ih.C_Location_ID,
+    COALESCE(bpgt.Greeting, bpg.greeting, ih.bpgreeting) AS deliverygreeting,
+    COALESCE(bp.name, ih.name)           AS deliverybpname,
+    COALESCE(bp.name2, ih.name2)         AS deliverybpname2,
+    COALESCE(l.address1, ih.address1)    AS deliveryadress,
+    COALESCE(l.address2, ih.address2)    AS deliveryadress2,
+    COALESCE(l.address3, ih.address3)    AS deliveryadress3,
+    COALESCE(l.address4, ih.address4)    AS deliveryadress4,
+    COALESCE(l.city, ih.city)             AS deliverycity,
+    COALESCE(l.regionname, ih.regionname) AS deliveryregionname,
+    COALESCE(bpl.name, ih.bp_location_name) AS locationname,
+    COALESCE(l.c_location_id, ih.c_location_id) AS deliverylocation_id,
+    ih.AD_Org_ID,
+    ih.Org_Location_ID,
+    ih.C_Invoice_ID AS record_id,
+    COALESCE(
+        cl.postal || cl.postal_add,
+        cl.postal,
+        cl.postal_add
+    ) AS postal,
+    COALESCE(cct.Name, cc.name) AS countryname,
+    COALESCE(
+        dl.postal || dl.postal_add,
+        dl.postal,
+        dl.postal_add
+    ) AS deliverypostal,
+    COALESCE(dct.Name, dc.name) AS deliverycountryname,
+    org.name AS org_name,
+    orgloc.address1 AS org_address1,
+    orgloc.address2 AS org_address2,
+    orgloc.address3 AS org_address3,
+    orgloc.address4 AS org_address4,
+    COALESCE(
+        orgloc.postal || orgloc.postal_add,
+        orgloc.postal,
+        orgloc.postal_add
+    ) AS org_postal,
+    orgloc.city AS org_city,
+    COALESCE(orgct.Name, orgcountry.name) AS org_countryname,
+    orgcountry.countrycode AS org_countrycode
+FROM c_invoice_header_v ih
+LEFT JOIN c_order o
+    ON o.c_order_id = ih.c_order_id
+LEFT JOIN c_bpartner bp
+    ON bp.c_bpartner_id = o.c_bpartner_id
+LEFT JOIN c_greeting bpg
+    ON bpg.c_greeting_id = bp.c_greeting_id
+LEFT JOIN c_greeting_trl bpgt
+    ON bpgt.c_greeting_id = bpg.c_greeting_id AND bpgt.AD_Language = $P{CURRENT_LANG}
+LEFT JOIN c_bpartner_location bpl
+    ON bpl.c_bpartner_location_id = o.c_bpartner_location_id
+LEFT JOIN c_location l
+    ON l.c_location_id = bpl.c_location_id
+JOIN c_location cl
+    ON cl.c_location_id = ih.c_location_id
+JOIN c_country cc
+    ON cc.c_country_id = cl.c_country_id
+LEFT JOIN c_country_trl cct
+    ON cct.c_country_id = cc.c_country_id AND cct.AD_Language = $P{CURRENT_LANG}
+JOIN c_location dl
+    ON dl.c_location_id = COALESCE(l.c_location_id, ih.c_location_id)
+JOIN c_country dc
+    ON dc.c_country_id = dl.c_country_id
+LEFT JOIN c_country_trl dct
+    ON dct.c_country_id = dc.c_country_id AND dct.AD_Language = $P{CURRENT_LANG}
+JOIN AD_Org org
+    ON org.AD_Org_ID = ih.AD_Org_ID
+JOIN c_location orgloc
+    ON orgloc.c_location_id = ih.org_location_id
+JOIN c_country orgcountry
+    ON orgcountry.c_country_id = orgloc.c_country_id
+LEFT JOIN c_country_trl orgct
+    ON orgct.c_country_id = orgcountry.c_country_id AND orgct.AD_Language = $P{CURRENT_LANG}
+WHERE
+    ih.c_invoice_id = CAST($P{RECORD_ID} AS NUMERIC)]]>
+	</queryString>
+	<field name="documentno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="documentno"/>
+		<property name="com.jaspersoft.studio.field.label" value="documentno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="bpgreeting" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bpgreeting"/>
+		<property name="com.jaspersoft.studio.field.label" value="bpgreeting"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="name2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name2"/>
+		<property name="com.jaspersoft.studio.field.label" value="name2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="bpcontactgreeting" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bpcontactgreeting"/>
+		<property name="com.jaspersoft.studio.field.label" value="bpcontactgreeting"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="contactname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="contactname"/>
+		<property name="com.jaspersoft.studio.field.label" value="contactname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="address1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address1"/>
+		<property name="com.jaspersoft.studio.field.label" value="address1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="address2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address2"/>
+		<property name="com.jaspersoft.studio.field.label" value="address2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="address3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address3"/>
+		<property name="com.jaspersoft.studio.field.label" value="address3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="address4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="address4"/>
+		<property name="com.jaspersoft.studio.field.label" value="address4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="city" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="city"/>
+		<property name="com.jaspersoft.studio.field.label" value="city"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="regionname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="regionname"/>
+		<property name="com.jaspersoft.studio.field.label" value="regionname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="c_location_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="c_location_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="c_location_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="deliverygreeting" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliverygreeting"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliverygreeting"/>
+	</field>
+	<field name="deliverybpname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliverybpname"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliverybpname"/>
+	</field>
+	<field name="deliverybpname2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliverybpname2"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliverybpname2"/>
+	</field>
+	<field name="deliveryadress" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliveryadress"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliveryadress"/>
+	</field>
+	<field name="deliveryadress2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliveryadress2"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliveryadress2"/>
+	</field>
+	<field name="deliveryadress3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliveryadress3"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliveryadress3"/>
+	</field>
+	<field name="deliveryadress4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliveryadress4"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliveryadress4"/>
+	</field>
+	<field name="deliverycity" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliverycity"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliverycity"/>
+	</field>
+	<field name="deliveryregionname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliveryregionname"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliveryregionname"/>
+	</field>
+	<field name="locationname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="locationname"/>
+		<property name="com.jaspersoft.studio.field.label" value="locationname"/>
+	</field>
+	<field name="deliverylocation_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="deliverylocation_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliverylocation_id"/>
+	</field>
+	<field name="ad_org_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ad_org_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="ad_org_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="org_location_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="org_location_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_location_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="record_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="record_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="record_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_header_v"/>
+	</field>
+	<field name="postal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="postal"/>
+		<property name="com.jaspersoft.studio.field.label" value="postal"/>
+	</field>
+	<field name="countryname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="countryname"/>
+		<property name="com.jaspersoft.studio.field.label" value="countryname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_country"/>
+	</field>
+	<field name="deliverypostal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliverypostal"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliverypostal"/>
+	</field>
+	<field name="deliverycountryname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="deliverycountryname"/>
+		<property name="com.jaspersoft.studio.field.label" value="deliverycountryname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_country"/>
+	</field>
+	<field name="org_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ad_org"/>
+	</field>
+	<field name="org_address1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_address1"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_address1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="org_address2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_address2"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_address2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="org_address3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_address3"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_address3"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="org_address4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_address4"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_address4"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="org_postal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_postal"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_postal"/>
+	</field>
+	<field name="org_city" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_city"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_city"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_location"/>
+	</field>
+	<field name="org_countryname" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_countryname"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_countryname"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_country"/>
+	</field>
+	<field name="org_countrycode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="org_countrycode"/>
+		<property name="com.jaspersoft.studio.field.label" value="org_countrycode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_country"/>
+	</field>
+	<detail>
+		<band height="229" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="60" width="240" height="12" isRemoveLineWhenBlank="true" uuid="4cf0a830-b736-421b-8bbb-624430c30e2a"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="12" width="240" height="12" isRemoveLineWhenBlank="true" uuid="27f477bb-9bd3-4156-a6b3-2173fcf57ff9">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bpgreeting}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="36" width="240" height="12" isRemoveLineWhenBlank="true" uuid="d2b48443-700b-41c1-9293-0fc2924c762a"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="24" width="240" height="12" uuid="f9d68ca0-be21-4a8b-b08a-8536ba4dc59b">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="48" width="240" height="12" isRemoveLineWhenBlank="true" uuid="9500c70a-0784-4796-a64b-744c7de7fd8a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="84" width="240" height="12" uuid="57cc5c61-641a-4870-8a9a-3e0e90af9cde"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{postal}!=null?$F{postal} + " ":"") + $F{city}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="240" height="12" uuid="35da03bd-377f-4297-aa33-28341f196bf1"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{org_name}+", " + ($F{org_address1}!=null?$F{org_address1}+", ":"") + ($F{org_address2}!=null?$F{org_address2}+", ":"") + ($F{org_address3}!=null?$F{org_address3}+", ":"") + ($F{org_address4}!=null?$F{org_address4}+", ":"") + (!$F{countryname}.equals($F{org_countryname})?$F{org_countrycode}+"-":"") + ($F{org_postal}!=null?$F{org_postal}+" ":"") + ($F{org_city}!=null?$F{org_city}:"")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="96" width="240" height="15" isRemoveLineWhenBlank="true" uuid="fa1dc96d-b443-469d-9aa5-73b63b193c97">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Bottom" markup="html">
+					<font fontName="SansSerif" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!$F{countryname}.equals($F{org_countryname})?$F{countryname}:null)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="" positionType="Float" x="0" y="142" width="240" height="12" isRemoveLineWhenBlank="true" uuid="ed3abdcc-aa49-4c39-8bf2-d727e572ecb8">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}.equals($F{deliverybpname}) ? $F{locationname} : $F{deliverygreeting}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="154" width="240" height="12" isRemoveLineWhenBlank="true" uuid="c28fb47c-6ae1-4be0-978e-a122f8ea38a6">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue()  && !$F{name}.equals($F{deliverybpname})]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deliverybpname}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="166" width="240" height="12" isRemoveLineWhenBlank="true" uuid="05463a0b-69b8-4809-a0a1-e0f5bdcfaf04">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue() && !$F{name}.equals($F{deliverybpname})]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deliverybpname2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="178" width="240" height="12" isRemoveLineWhenBlank="true" uuid="142697c4-3ca5-48d2-b094-f7e00ae454f1">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deliveryadress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="190" width="240" height="12" isRemoveLineWhenBlank="true" uuid="6e96ddad-2abc-4beb-9b74-5d38b9cfeec6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deliveryadress2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Header" positionType="Float" x="0" y="202" width="240" height="12" uuid="06d8fb2c-fba7-4e57-9e7c-3ef7ce56758b">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{deliverypostal}!=null?$F{deliverypostal} + " ":"") + $F{deliverycity}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="214" width="240" height="12" isRemoveLineWhenBlank="true" uuid="9ff8ba4f-5207-4bc0-b110-970e066dfc59">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue()]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="8" isBold="false" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!$F{deliverycountryname}.equals($F{org_countryname})?$F{deliverycountryname}:null)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="130" width="240" height="12" uuid="427c33e7-d05b-4839-a881-a6b893b2d8bb">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{c_location_id}.intValue()!=$F{deliverylocation_id}.intValue()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"IsShipTo", "Shipment Address")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

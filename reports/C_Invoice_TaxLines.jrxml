@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Document Tax Lines" language="groovy" pageWidth="511" pageHeight="842" columnWidth="511" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="C_Invoice_Localization" uuid="0ea03c33-cee9-4aa5-b7a2-e829a06f336b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<template><![CDATA["styles.jrtx"]]></template>
+	<parameter name="RECORD_ID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1040395]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CURRENT_LANG" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["de_DE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ISO_CODE" class="java.lang.String"/>
+	<parameter name="BP_LANG" class="java.lang.String"/>
+	<parameter name="CURRENCY_PATTERN" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    ilt.line,
+    ilt.linenetamt,
+    ilt.qtyinvoiced,
+    ilt.qtyentered,
+    ilt.uomsymbol,
+    ilt.c_uom_name,
+    ilt.name AS p_name,
+    ilt.description,
+    ilt.documentnote,
+    ilt.productvalue,
+    ilt.priceentered,
+    ilt.priceactual,
+    ilt.productdescription,
+    ilt.c_tax_id,
+    ilt.c_invoice_id AS record_id,
+    COALESCE(taxtr.description, c_tax.description, ilt.name) AS name
+FROM c_invoice_linetax_v ilt
+JOIN c_tax
+    ON c_tax.c_tax_id = ilt.c_tax_id
+LEFT JOIN C_Tax_Trl taxtr
+    ON taxtr.C_Tax_ID = c_tax.C_Tax_ID AND taxtr.AD_Language = $P{CURRENT_LANG}
+WHERE ilt.c_invoice_id = CAST($P{RECORD_ID} AS NUMERIC)
+  AND (ilt.line > 999000 OR ilt.line IS NULL)
+ORDER BY ilt.line]]>
+	</queryString>
+	<field name="line" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="line"/>
+		<property name="com.jaspersoft.studio.field.label" value="line"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="linenetamt" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="linenetamt"/>
+		<property name="com.jaspersoft.studio.field.label" value="linenetamt"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="qtyinvoiced" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="qtyinvoiced"/>
+		<property name="com.jaspersoft.studio.field.label" value="qtyinvoiced"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="qtyentered" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="qtyentered"/>
+		<property name="com.jaspersoft.studio.field.label" value="qtyentered"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="uomsymbol" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="uomsymbol"/>
+		<property name="com.jaspersoft.studio.field.label" value="uomsymbol"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="c_uom_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="c_uom_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="c_uom_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="p_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="p_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="p_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="documentnote" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="documentnote"/>
+		<property name="com.jaspersoft.studio.field.label" value="documentnote"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="productvalue" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="productvalue"/>
+		<property name="com.jaspersoft.studio.field.label" value="productvalue"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="priceentered" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="priceentered"/>
+		<property name="com.jaspersoft.studio.field.label" value="priceentered"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="priceactual" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="priceactual"/>
+		<property name="com.jaspersoft.studio.field.label" value="priceactual"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="productdescription" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="productdescription"/>
+		<property name="com.jaspersoft.studio.field.label" value="productdescription"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="c_tax_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="c_tax_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="c_tax_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="record_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="record_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="record_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="c_invoice_linetax_v"/>
+	</field>
+	<field name="name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="name"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
+	</field>
+	<variable name="language" class="java.lang.String">
+		<variableExpression><![CDATA[new String($P{CURRENT_LANG}.substring(0,2))]]></variableExpression>
+		<initialValueExpression><![CDATA[new String($P{CURRENT_LANG}.substring(0,2))]]></initialValueExpression>
+	</variable>
+	<variable name="country" class="java.lang.String">
+		<variableExpression><![CDATA[new String($P{CURRENT_LANG}.substring(3,5))]]></variableExpression>
+		<initialValueExpression><![CDATA[new String($P{CURRENT_LANG}.substring(3,5))]]></initialValueExpression>
+	</variable>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement key="" style="Report Standard Font" x="0" y="0" width="420" height="12" uuid="e68539fe-fa17-4e7d-be1b-ef0ee048e507"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}+ " " + $P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"from", "from").toLowerCase() + " " + 
+
+
+
+new DecimalFormat(((DecimalFormat)NumberFormat.getCurrencyInstance(new Locale("de","DE"))).toPattern().replace("¤","€")).format($F{priceactual})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 €">
+				<reportElement key="" style="Report Monospace Font" x="420" y="0" width="84" height="12" uuid="f45c7fcb-f922-4fc3-808b-c18f25ab9fa0">
+					<printWhenExpression><![CDATA[($F{linenetamt}!=null) && ($F{linenetamt}.compareTo(BigDecimal.ZERO)!=0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat($P{CURRENCY_PATTERN}).format($F{linenetamt})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
