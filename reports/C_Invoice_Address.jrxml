@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice Address" language="groovy" pageWidth="240" pageHeight="240" whenNoDataType="NoPages" columnWidth="240" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="30ceeae4-aeff-40ff-b8e1-5e8d8d1d0e83">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
@@ -114,7 +114,7 @@ JOIN c_country orgcountry
 LEFT JOIN c_country_trl orgct
     ON orgct.c_country_id = orgcountry.c_country_id AND orgct.AD_Language = $P{CURRENT_LANG}
 WHERE
-    ih.c_invoice_id = CAST($P{RECORD_ID} AS NUMERIC)]]>
+    ih.c_invoice_id = $P{RECORD_ID}]]>
 	</queryString>
 	<field name="documentno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="documentno"/>

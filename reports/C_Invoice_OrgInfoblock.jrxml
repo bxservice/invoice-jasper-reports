@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Document Org Infoblock" language="groovy" pageWidth="210" pageHeight="200" columnWidth="210" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="C_Invoice_Localization" uuid="8b33ad11-7673-4699-9c51-caba44c76391">
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Document Org Infoblock" language="groovy" pageWidth="210" pageHeight="200" columnWidth="210" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8b33ad11-7673-4699-9c51-caba44c76391">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -49,7 +49,7 @@ JOIN AD_Org org
     ON org.AD_Org_ID = ih.AD_Org_ID
 LEFT JOIN c_order o ON ih.c_order_id = o.c_order_id 
 LEFT JOIN C_BPartner bp ON bp.c_bpartner_id = o.c_bpartner_id
- WHERE ih.c_invoice_id = CAST($P{RECORD_ID} AS NUMERIC)]]>
+ WHERE ih.c_invoice_id = $P{RECORD_ID}]]>
 	</queryString>
 	<field name="orderbpvalue" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="orderbpvalue"/>

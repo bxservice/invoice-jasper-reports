@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="55" rightMargin="25" topMargin="25" bottomMargin="0" resourceBundle="C_Invoice_Localization" uuid="20e8fd88-2908-486a-951c-643670cb054e">
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="515" leftMargin="55" rightMargin="25" topMargin="25" bottomMargin="0" uuid="20e8fd88-2908-486a-951c-643670cb054e">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="C_InvoiceGeneric/DataAdapter1.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -51,15 +51,9 @@
     ih.bptaxid,
     ih.bp_ad_language,
     ih.taxid,
-    CASE
-        WHEN ih.DocStatus IN ('CO','CL') THEN ih.documenttype ELSE COALESCE(dtt.PrintName || ' (offen)', dt.PrintName || ' (offen)')
-    END AS documenttype,
-    CASE
-        WHEN ih.DocStatus IN ('CO','CL')
-            THEN ih.documenttypenote
-        ELSE COALESCE(dtt.DocumentNote, dt.DocumentNote)
-    END AS documenttypenote,
-    ih.bpgreeting,
+    COALESCE(dtt.PrintName, dt.PrintName) AS documenttype,
+    COALESCE(iht.documenttypenote, ih.documenttypenote) AS documenttypenote,
+    COALESCE(iht.bpgreeting, ih.bpgreeting) AS bpgreeting,
     ih.name,
     ih.name2,
     ih.bpcontactgreeting,
@@ -70,8 +64,8 @@
     ih.description,
     ih.dateordered,
     ih.dateinvoiced,
-    ih.paymentterm,
-    ih.paymenttermnote,
+    COALESCE(iht.paymentterm, ih.paymentterm) AS paymentterm,
+    COALESCE(iht.paymenttermnote, ih.paymenttermnote) AS paymenttermnote,
     ih.totallines,
     ih.grandtotal,
     ih.istaxincluded,
@@ -104,11 +98,11 @@
     lang.languageiso,
     lang.countrycode AS languagecc,
     cur.iso_code,
-    cur.cursymbol,
+    COALESCE(iht.cursymbol, ih.cursymbol) AS cursymbol,
     bpgrp.description AS c_bp_group_description,
-    img.binarydata AS logo_binarydata,
     o.documentno AS o_documentno
 FROM c_invoice_header_v ih
+LEFT JOIN c_invoice_header_vt iht ON iht.C_Invoice_ID=ih.C_Invoice_ID AND iht.AD_Language = $P{CURRENT_LANG}
 JOIN C_DocType dt
     ON dt.C_DocType_ID = ih.C_DocTypeTarget_ID
 LEFT JOIN C_DocType_Trl dtt ON dtt.C_DocType_ID = dt.C_DocType_ID 
@@ -123,14 +117,12 @@ JOIN c_currency cur
     ON cur.c_currency_ID = ih.c_currency_id
 LEFT JOIN c_bp_group bpgrp
     ON bpgrp.c_bp_group_id = ih.bp_c_bp_group_id
-LEFT JOIN AD_Image img
-    ON img.AD_Image_ID = ih.logo_id
 JOIN c_BPartner bp
     ON bp.c_bpartner_id = ih.c_bpartner_id
 LEFT JOIN c_order o
 ON o.c_order_id = ih.c_order_id 
 WHERE
-    ih.c_invoice_id = CAST($P{RECORD_ID} AS NUMERIC)]]>
+    ih.c_invoice_id = $P{RECORD_ID}]]>
 	</queryString>
 	<field name="documentno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="documentno"/>
@@ -404,11 +396,6 @@ WHERE
 		<property name="com.jaspersoft.studio.field.label" value="c_bp_group_description"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="c_bp_group"/>
 	</field>
-	<field name="logo_binarydata" class="byte[]">
-		<property name="com.jaspersoft.studio.field.name" value="logo_binarydata"/>
-		<property name="com.jaspersoft.studio.field.label" value="logo_binarydata"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="ad_image"/>
-	</field>
 	<field name="o_documentno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="o_documentno"/>
 		<property name="com.jaspersoft.studio.field.label" value="o_documentno"/>
@@ -491,7 +478,7 @@ WHERE
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<image>
 				<reportElement x="0" y="0" width="515" height="55" uuid="3721d115-5418-4653-8e46-77b82008854b"/>
-				<imageExpression><![CDATA[$P{COLUMN_LOOKUP}.apply( "image", $F{logo_id} )]]></imageExpression>
+				<imageExpression><![CDATA[$F{logo_id} > 0 ? $P{COLUMN_LOOKUP}.apply( "image", $F{logo_id} ) : null]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -500,7 +487,7 @@ WHERE
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}>1]]></printWhenExpression>
 			<frame>
 				<reportElement x="301" y="0" width="210" height="60" uuid="2d60ea3d-4722-4a95-b457-6818fd999721"/>
-				<textField pattern="dd.MM.yyyy">
+				<textField>
 					<reportElement style="Report Monospace Font" x="101" y="0" width="108" height="12" isRemoveLineWhenBlank="true" uuid="b1ad6abc-15e4-4c49-b2a4-78f1a8e0c192">
 						<property name="local_mesure_unitx" value="mm"/>
 						<property name="com.jaspersoft.studio.unit.x" value="mm"/>
@@ -513,7 +500,7 @@ WHERE
 					<textElement textAlignment="Right">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{dateinvoiced}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.LONG, new Locale($F{languageiso},$F{languagecc})).format($F{dateinvoiced})]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Standard Font" x="-1" y="0" width="96" height="12" isRemoveLineWhenBlank="true" uuid="60eee991-9a5b-437e-8404-2c195bfa0230">
@@ -536,7 +523,7 @@ WHERE
 					<textElement textAlignment="Right">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{dateordered}==null?$F{dateinvoiced}:$F{dateordered}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.LONG, new Locale($F{languageiso},$F{languagecc})).format($F{dateordered}==null?$F{dateinvoiced}:$F{dateordered})]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Standard Font" x="-1" y="12" width="96" height="12" forecolor="rgba(0, 0, 0, 0.5019608)" uuid="30959547-3699-47e5-9f4c-41ebd0966de5"/>
@@ -715,6 +702,15 @@ WHERE
 				<subreportParameter name="P_MsgHelper">
 					<subreportParameterExpression><![CDATA[$P{P_MsgHelper}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="cursymbol">
+					<subreportParameterExpression><![CDATA[$F{cursymbol}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="languageiso">
+					<subreportParameterExpression><![CDATA[$F{languageiso}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="languagecc">
+					<subreportParameterExpression><![CDATA[$F{languagecc}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"C_Invoice_TaxLines.jasper"]]></subreportExpression>
 			</subreport>
@@ -722,7 +718,7 @@ WHERE
 				<reportElement style="Report Standard Font" positionType="Float" x="0" y="270" width="516" height="16" isRemoveLineWhenBlank="true" uuid="670c893f-26fa-4059-a9ec-633b1b698a96">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[($F{paymenttermnote}!=null?$F{paymenttermnote}:$F{paymentterm})+("D".equals($F{paymentrule})?" WIRD ABGEBUCHT.":"")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{paymenttermnote}!=null?$F{paymenttermnote}:$F{paymentterm})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Page Header" x="0" y="149" width="240" height="12" uuid="ef8577a8-0453-4408-a543-5c2a1686998a">
@@ -805,7 +801,7 @@ WHERE
 				<reportElement x="300" y="120" width="210" height="64" uuid="150bdf81-1576-41f7-93e1-ea485e889526">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textField pattern="dd.MM.yyyy">
+				<textField>
 					<reportElement style="Report Monospace Font" x="101" y="1" width="108" height="14" isRemoveLineWhenBlank="true" uuid="deeff994-2747-4bfe-98d4-d57df7a7fdc5">
 						<property name="local_mesure_unitx" value="mm"/>
 						<property name="com.jaspersoft.studio.unit.x" value="mm"/>
@@ -818,7 +814,7 @@ WHERE
 					<textElement textAlignment="Right">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{dateinvoiced}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.LONG, new Locale($F{languageiso},$F{languagecc})).format($F{dateinvoiced})]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Standard Font" x="-1" y="1" width="96" height="12" isRemoveLineWhenBlank="true" uuid="da130593-c6c9-4a9b-920e-b30a63d01511">
@@ -841,7 +837,7 @@ WHERE
 					<textElement textAlignment="Right">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{dateordered}==null?$F{dateinvoiced}:$F{dateordered}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.LONG, new Locale($F{languageiso},$F{languagecc})).format($F{dateordered}==null?$F{dateinvoiced}:$F{dateordered})]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Standard Font" x="-1" y="29" width="96" height="12" forecolor="rgba(0, 0, 0, 0.5019608)" uuid="225be5be-1746-41b0-b35d-53d7f5e925b5"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Footer" language="groovy" pageWidth="511" pageHeight="45" whenNoDataType="AllSectionsNoDetail" columnWidth="511" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e6609d9d-ff80-4849-87e3-17c73f20f011">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
@@ -36,7 +36,7 @@ FROM ad_org
 	 ad_orginfo.c_location_id = c_location.c_location_id 
 	LEFT JOIN C_Bank ON ad_orginfo.transferbank_id = c_bank.c_bank_id
 	LEFT JOIN C_BankAccount ON ad_orginfo.transferbank_id = c_BankAccount.c_bank_id
-WHERE ad_org.ad_org_id = CAST( $P{AD_ORG_ID} AS INTEGER)]]>
+WHERE ad_org.ad_org_id = $P{AD_ORG_ID}]]>
 	</queryString>
 	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="name"/>
