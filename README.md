@@ -45,3 +45,6 @@ Reports use **iDempiere's message system** (`org.compiere.util.Msg.translate`): 
 2. Create the **Report & Process** record pointing to the file `C_Invoice_Document.jrxml`
 3. Configure the logo on Org Info or Client Info
 4. **Test** with different languages
+
+## Sponsors
+[YK IT-Beratung](http://www.it-beratung.it/)
