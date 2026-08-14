@@ -25,7 +25,6 @@
 	<parameter name="ISO_CODE" class="java.lang.String"/>
 	<parameter name="BP_LANG" class="java.lang.String"/>
 	<parameter name="CURRENCY_PATTERN" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false"/>
 	<parameter name="cursymbol" class="java.lang.String"/>
 	<parameter name="languagecc" class="java.lang.String"/>
 	<parameter name="languageiso" class="java.lang.String"/>
@@ -152,7 +151,7 @@ ORDER BY ilt.line]]>
 				<textElement>
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{name}+ " " + $P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"from", "from").toLowerCase() + " " + 
+				<textFieldExpression><![CDATA[$F{name}+ " " + "from" + " " +
 new DecimalFormat(((DecimalFormat)NumberFormat.getCurrencyInstance(new Locale($P{languageiso},$P{languagecc}))).toPattern().replace("¤",$P{cursymbol})).format($F{priceactual})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00 €">

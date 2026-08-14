@@ -33,16 +33,6 @@
 		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="COLUMN_LOOKUP" class="java.util.function.BiFunction"/>
-	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Object() {
-    public String getMsg(String valmsg, String dflt) {
-     String msg = org.compiere.util.Msg.translate($P{CURRENT_LANG}, valmsg);
-     if (msg == null || msg.length() == 0 || msg.equals(valmsg))
-         return dflt;
-     return msg;
-    }
-}]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[SELECT
     ih.documentno,
@@ -509,7 +499,7 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("DateInvoiced", "Invoice Date")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Invoice Date"]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd.MM.yyyy">
 					<reportElement style="Report Monospace Font" x="101" y="12" width="108" height="12" forecolor="#808080" uuid="095fe256-87ff-4250-a8c5-4bbe24682b4d">
@@ -530,7 +520,7 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("DateDelivered", "Date Delivered")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Date Delivered"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Monospace Font" x="101" y="24" width="108" height="12" uuid="3f179f16-c448-4d2a-8253-1d817c9c1387">
@@ -552,14 +542,14 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("DocumentNo", "Document No")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Document No"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Standard Font" x="-1" y="36" width="96" height="12" forecolor="#808080" uuid="5d64bfe9-4d7e-4ba2-b431-5b08c4295e1a"/>
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("C_Order_ID", "Order")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Order"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Monospace Font" x="101" y="36" width="108" height="12" forecolor="#808080" uuid="3a54a3a3-f2d6-4649-83af-ee6547511e2d">
@@ -581,7 +571,7 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("BX_UST", "Your USt-ID")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Your USt-ID"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="Report Standard Font" x="101" y="48" width="108" height="12" forecolor="#808080" uuid="c253b184-d0ff-4a30-b45b-a7b3226ea50e">
@@ -620,9 +610,6 @@ WHERE
 				<subreportParameter name="CURRENT_LANG">
 					<subreportParameterExpression><![CDATA[$P{CURRENT_LANG}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_MsgHelper">
-					<subreportParameterExpression><![CDATA[$P{P_MsgHelper}]]></subreportParameterExpression>
-				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"C_Invoice_Address.jasper"]]></subreportExpression>
 			</subreport>
@@ -657,9 +644,6 @@ WHERE
 				</subreportParameter>
 				<subreportParameter name="CURRENCY_PATTERN">
 					<subreportParameterExpression><![CDATA[((DecimalFormat)NumberFormat.getCurrencyInstance(new Locale($F{languageiso},$F{languagecc}))).toPattern().replace("¤",$F{cursymbol})]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_MsgHelper">
-					<subreportParameterExpression><![CDATA[$P{P_MsgHelper}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"C_Invoice_Lines.jasper"]]></subreportExpression>
@@ -699,9 +683,6 @@ WHERE
 				<subreportParameter name="CURRENCY_PATTERN">
 					<subreportParameterExpression><![CDATA[((DecimalFormat)NumberFormat.getCurrencyInstance(new Locale($F{languageiso},$F{languagecc}))).toPattern().replace("¤",$F{cursymbol})]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_MsgHelper">
-					<subreportParameterExpression><![CDATA[$P{P_MsgHelper}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="cursymbol">
 					<subreportParameterExpression><![CDATA[$F{cursymbol}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -727,7 +708,7 @@ WHERE
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("BX_NotCompleted", "Draft Document!")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Draft Document!"]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement style="Report Monospace Font" positionType="Float" x="420" y="222" width="84" height="12" isRemoveLineWhenBlank="true" uuid="b9e1fd8f-5079-4234-931d-b0deb654b8ed">
@@ -746,7 +727,7 @@ WHERE
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("Total", "Total")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement positionType="Float" x="420" y="221" width="90" height="1" isRemoveLineWhenBlank="true" uuid="7ab56fe6-3299-413e-a769-bb8fc264ceca">
@@ -776,9 +757,6 @@ WHERE
 				</subreportParameter>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_MsgHelper">
-					<subreportParameterExpression><![CDATA[$P{P_MsgHelper}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"C_Invoice_OrgInfoblock.jasper"]]></subreportExpression>
@@ -823,7 +801,7 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("DateInvoiced", "Invoice Date")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Invoice Date"]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd.MM.yyyy">
 					<reportElement style="Report Monospace Font" x="101" y="29" width="108" height="12" forecolor="#808080" uuid="fd0c1a14-2828-442b-83ee-ad5dd911dbd2">
@@ -844,7 +822,7 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("DateDelivered", "Date Delivered")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Date Delivered"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Monospace Font" x="101" y="15" width="108" height="14" uuid="3c627924-0998-4c2c-8215-52c40725081c">
@@ -866,7 +844,7 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("DocumentNo", "Document No")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Document No"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="Report Standard Font" x="101" y="53" width="108" height="12" isRemoveLineWhenBlank="true" forecolor="#808080" uuid="25e13a04-0d07-4def-a96c-9702d0b05cee">
@@ -889,14 +867,14 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("BX_UST-IDNr", "Your USt-ID")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Your USt-ID"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="Report Standard Font" x="-1" y="41" width="96" height="12" forecolor="#808080" uuid="413e8918-b40d-4ee5-aa8a-2c1f83672b1f"/>
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("C_Order_ID", "Order")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Order"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="Report Monospace Font" x="101" y="41" width="108" height="12" forecolor="#808080" uuid="cf42be7d-fff4-410e-a413-7bdc9ca635fc">
@@ -920,7 +898,7 @@ WHERE
 					<textElement markup="none">
 						<font fontName="SansSerif" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("POReference", "Order Reference")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Order Reference"]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement style="Report Standard Font" positionType="Float" x="101" y="65" width="108" height="12" isRemoveLineWhenBlank="true" forecolor="#808080" uuid="ede615ea-9be7-4bb2-afdc-bb6f20264c06">
@@ -948,9 +926,6 @@ WHERE
 				<subreportParameter name="AD_ORG_ID">
 					<subreportParameterExpression><![CDATA[$P{AD_ORG_ID}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_MsgHelper">
-					<subreportParameterExpression><![CDATA[$P{P_MsgHelper}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="CURRENT_LANG">
 					<subreportParameterExpression><![CDATA[$P{CURRENT_LANG}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -964,7 +939,7 @@ WHERE
 				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="8" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("from", "from").toLowerCase() + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["from" + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="FixRelativeToBottom" x="456" y="28" width="34" height="12" printWhenGroupChanges="Group1" forecolor="rgba(0, 0, 0, 0.6392157)" uuid="a5ece44d-3fbd-4822-84da-5a9d2661a756">
@@ -973,7 +948,7 @@ WHERE
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="8" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("Page", "Page") + $V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Page" + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

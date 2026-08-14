@@ -23,7 +23,6 @@
 		<defaultValueExpression><![CDATA["de_DE"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CURRENCY_PATTERN" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
     ilt.line,
@@ -145,35 +144,35 @@ ORDER BY ilt.line]]>
 				<textElement textAlignment="Left" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"QtyEntered", "Quantity")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Quantity"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="65" y="2" width="50" height="12" uuid="425914f1-f661-4b34-abce-8150f0840daa"/>
 				<textElement textAlignment="Left" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"ProdCode", "Code")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Code"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="348" y="2" width="60" height="12" uuid="ca36e9e4-0dea-4699-ac68-87f1d80a19e6"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"PriceActual", "Unit Price")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Unit Price"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="108" y="2" width="228" height="12" uuid="b65f3f60-a99e-4f93-a280-0d0646ed8936"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"Description", "Description")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Description"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement stretchType="RelativeToBandHeight" x="420" y="2" width="84" height="12" uuid="3afe14d3-589b-4664-a56a-29b4f2fe4a0d"/>
 				<textElement textAlignment="Right" markup="none">
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"Total","Total")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement mode="Opaque" x="0" y="0" width="511" height="1" forecolor="#FFFFFF" uuid="7f4746d6-d2ab-404d-8ba0-dab6ecc017c6">

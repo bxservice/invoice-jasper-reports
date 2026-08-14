@@ -8,7 +8,6 @@
 	<parameter name="AD_ORG_ID" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[11]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false"/>
 	<parameter name="CURRENT_LANG" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA["de_DE"]]></defaultValueExpression>
@@ -132,7 +131,7 @@ WHERE ad_org.ad_org_id = $P{AD_ORG_ID}]]>
 				<textElement>
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"BX_UST", "Your USt-ID") + $F{taxid} +"\n" + $P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"IBAN", "IBAN")+": "+$F{iban}+"\n"+$F{bank_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Your USt-ID" + $F{taxid} +"\n" + "IBAN"+": "+$F{iban}+"\n"+$F{bank_name}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

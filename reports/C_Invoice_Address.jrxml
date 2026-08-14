@@ -25,7 +25,6 @@
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA["de_DE"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
     ih.documentno,
@@ -462,7 +461,7 @@ WHERE
 				<textElement>
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"IsShipTo", "Shipment Address")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Shipment Address"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

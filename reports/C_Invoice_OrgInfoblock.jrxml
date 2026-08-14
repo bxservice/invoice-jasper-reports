@@ -30,7 +30,6 @@
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA["de_DE"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_MsgHelper" class="java.lang.Object" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT
 	bp.value AS orderbpvalue,
@@ -131,7 +130,7 @@ LEFT JOIN C_BPartner bp ON bp.c_bpartner_id = o.c_bpartner_id
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"Phone", "Phone Number")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Phone Number"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Report Standard Font" x="0" y="24" width="84" height="12" isRemoveLineWhenBlank="true" uuid="57eaab81-e3a8-4598-baf6-b6dfc7126e74">
@@ -140,7 +139,7 @@ LEFT JOIN C_BPartner bp ON bp.c_bpartner_id = o.c_bpartner_id
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"ContactName", "Contact Person")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Contact Person"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="Report Standard Font" x="60" y="36" width="150" height="12" isRemoveLineWhenBlank="true" uuid="f7543d8b-e449-4b60-9153-5d45c6d0f0c6">
@@ -164,14 +163,14 @@ LEFT JOIN C_BPartner bp ON bp.c_bpartner_id = o.c_bpartner_id
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"EMail", "Email")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Email"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Report Standard Font" positionType="Float" x="0" y="72" width="84" height="12" uuid="489470cb-8dc7-46ea-a5df-708de24e463b"/>
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"BX_ClientNo", "Client Number")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Client Number"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Report Standard Font" x="0" y="48" width="84" height="12" isRemoveLineWhenBlank="true" uuid="973c37a7-8d0a-48ef-be06-a8a79b0e0870">
@@ -180,7 +179,7 @@ LEFT JOIN C_BPartner bp ON bp.c_bpartner_id = o.c_bpartner_id
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"EMail", "Email")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Email"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="Report Standard Font" x="60" y="0" width="150" height="12" isRemoveLineWhenBlank="true" uuid="96cfddcb-8374-4d64-8d7a-dd26366ea595">
@@ -234,7 +233,7 @@ LEFT JOIN C_BPartner bp ON bp.c_bpartner_id = o.c_bpartner_id
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"Phone", "Phone Number")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Phone Number"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="Report Standard Font" x="60" y="48" width="150" height="12" isRemoveLineWhenBlank="true" uuid="cc95350c-3fef-40ec-9693-f14e109cef55">
@@ -265,7 +264,7 @@ LEFT JOIN C_BPartner bp ON bp.c_bpartner_id = o.c_bpartner_id
 				<textElement markup="none">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"POReference", "Order Reference")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Order Reference"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement style="Report Monospace Font" positionType="Float" x="84" y="84" width="126" height="12" isRemoveLineWhenBlank="true" uuid="4627945e-e769-48a7-bd6d-7a4ca0b95290">
