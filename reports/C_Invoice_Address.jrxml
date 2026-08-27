@@ -462,7 +462,7 @@ WHERE
 				<textElement>
 					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"IsShipTo", "Shipment Address")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("IsShipTo", "Shipment Address")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

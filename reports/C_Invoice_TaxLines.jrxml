@@ -152,7 +152,7 @@ ORDER BY ilt.line]]>
 				<textElement>
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{name}+ " " + $P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"from", "from").toLowerCase() + " " + 
+				<textFieldExpression><![CDATA[$F{name}+ " " + $P{P_MsgHelper}.getMsg("from", "from").toLowerCase() + " " + 
 new DecimalFormat(((DecimalFormat)NumberFormat.getCurrencyInstance(new Locale($P{languageiso},$P{languagecc}))).toPattern().replace("¤",$P{cursymbol})).format($F{priceactual})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00 €">

@@ -132,7 +132,7 @@ WHERE ad_org.ad_org_id = $P{AD_ORG_ID}]]>
 				<textElement>
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"BX_UST", "Your USt-ID") + $F{taxid} +"\n" + $P{P_MsgHelper}.getClass().getMethod("getMsg",String.class,String.class).invoke($P{P_MsgHelper},"IBAN", "IBAN")+": "+$F{iban}+"\n"+$F{bank_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_MsgHelper}.getMsg("BX_UST", "Your USt-ID") + $F{taxid} +"\n" + $P{P_MsgHelper}.getMsg("IBAN", "IBAN")+": "+$F{iban}+"\n"+$F{bank_name}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
